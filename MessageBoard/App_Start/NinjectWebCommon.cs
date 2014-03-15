@@ -12,6 +12,7 @@ namespace MessageBoard.App_Start
     using Ninject.Web.Common;
     using MessageBoard.Services;
     using MessageBoard.Models;
+    using MessageBoard.Data;
 
     public static class NinjectWebCommon 
     {
@@ -55,12 +56,13 @@ namespace MessageBoard.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            #if DEBUG
-                kernel.Bind<IMailService>().To<MockMailService>().InRequestScope();
-            #else
-                kernel.Bind<IMailService>().To<MailService>().InRequestScope();
-            #endif
-
+#if DEBUG
+    kernel.Bind<IMailService>().To<MockMailService>().InRequestScope();
+#else
+    kernel.Bind<IMailService>().To<MailService>().InRequestScope();
+#endif
+    kernel.Bind<IMessageBoardRepository>().To<MessageBoardRepository>().InRequestScope();
+    kernel.Bind<MessageBoardContext>().To<MessageBoardContext>().InRequestScope();
         }        
     }
 }
