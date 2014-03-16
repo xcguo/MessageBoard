@@ -64,6 +64,7 @@ namespace MessageBoard.App_Start
     kernel.Bind<IMailService>().To<MockMailService>().InRequestScope();
 #else
     kernel.Bind<IMailService>().To<MailService>().InRequestScope();
+
 #endif
     kernel.Bind<IMessageBoardRepository>().To<MessageBoardRepository>().InRequestScope();
     kernel.Bind<MessageBoardContext>().To<MessageBoardContext>().InRequestScope();
